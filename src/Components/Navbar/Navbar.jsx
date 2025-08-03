@@ -1,22 +1,15 @@
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
 
     const navList = <>
         <li><a>Item 1</a></li>
-        <li>
-            <details>
-                <summary>Parent</summary>
-                <ul className="p-2">
-                    <li><a>Submenu 1</a></li>
-                    <li><a>Submenu 2</a></li>
-                </ul>
-            </details>
-        </li>
+        <li><Link to={'/menu'}>Menu</Link></li>
         <li><a>Item 3</a></li>
     </>
 
     return (
-        <div className="navbar fixed z-10  bg-black/30 shadow-sm">
+        <div className="navbar fixed z-10 text-white  bg-black/30 shadow-sm">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -28,7 +21,7 @@ const Navbar = () => {
                         {navList}
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl">daisyUI</a>
+                <Link className="" to={'/'}>Sufra By SLASH</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
