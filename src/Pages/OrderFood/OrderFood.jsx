@@ -6,11 +6,19 @@ import { useState } from 'react';
 import FoodCard from '../../Components/FoodCard/FoodCard';
 import useMenu from '../../Hooks/useMenu';
 import DynamicTitle from '../../Components/DynamicTitle/DynamicTitle';
+import { useParams } from 'react-router-dom';
 const OrderFood = () => {
-    const [tabIndex, setTabIndex] = useState(0);
+    const categories = ['salad', 'pizza', 'soup', 'dessert', 'drinks']
+    const {category} = useParams()
+    console.log(category);
+    const initialIndex = categories.indexOf(category)
+    const [tabIndex, setTabIndex] = useState(initialIndex);
     const items = useMenu();
-    const offerItems = items.filter(item => item.category === 'offered')
+    const drinksItems = items.filter(item => item.category === 'drinks')
     const dessertItems = items.filter(item => item.category === 'dessert')
+    const saladItems = items.filter(item => item.category === 'salad')
+    const pizzaItems = items.filter(item => item.category === 'pizza')
+    const soupItems = items.filter(item => item.category === 'soup')
     return (
 
         <div>
@@ -20,25 +28,51 @@ const OrderFood = () => {
                 <div className='flex justify-center my-12'>
                     <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)} >
                         <TabList>
-                            <Tab>Salads</Tab>
+                            <Tab>Salad</Tab>
                             <Tab>Pizza</Tab>
                             <Tab>Soup</Tab>
                             <Tab>Dessert</Tab>
                             <Tab>Drinks</Tab>
                         </TabList>
-                        <TabPanel></TabPanel>
-                        <TabPanel></TabPanel>
-                        <TabPanel></TabPanel>
-                        <TabPanel></TabPanel>
-                        <TabPanel></TabPanel>
+                        <TabPanel>
+                            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-fit mx-auto mb-12'>
+                                {
+                                    saladItems.map(item => <FoodCard key={item._id} item={item}></FoodCard>)
+                                }
+                            </div>
+                        </TabPanel>
+                        <TabPanel>
+                            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-fit mx-auto mb-12'>
+                                {
+                                    pizzaItems.map(item => <FoodCard key={item._id} item={item}></FoodCard>)
+                                }
+                            </div>
+                        </TabPanel>
+                        <TabPanel>
+                            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-fit mx-auto mb-12'>
+                                {
+                                    soupItems.map(item => <FoodCard key={item._id} item={item}></FoodCard>)
+                                }
+                            </div>
+                        </TabPanel>
+                        <TabPanel>
+                            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-fit mx-auto mb-12'>
+                                {
+                                    dessertItems.map(item => <FoodCard key={item._id} item={item}></FoodCard>)
+                                }
+                            </div>
+                        </TabPanel>
+                        <TabPanel>
+                            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-fit mx-auto mb-12'>
+                                {
+                                    drinksItems.map(item => <FoodCard key={item._id} item={item}></FoodCard>)
+                                }
+                            </div>
+                        </TabPanel>
                     </Tabs>
                 </div>
 
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-fit mx-auto mb-12'>
-                    {
-                        dessertItems.map(item => <FoodCard key={item._id} item={item}></FoodCard>)
-                    }
-                </div>
+
             </div>
         </div>
 

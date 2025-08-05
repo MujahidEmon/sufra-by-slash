@@ -5,7 +5,7 @@ const Navbar = () => {
     const navList = <>
         <li><Link to={'/'}>Home</Link></li>
         <li><Link to={'/menu'}>Menu</Link></li>
-        <li><Link to={'/order'}>Order Food</Link></li>
+        <li><Link to={'/order/salads'}>Order Food</Link></li>
     </>
 
     return (
@@ -17,7 +17,7 @@ const Navbar = () => {
                     </div>
                     <ul
                         tabIndex={0}
-                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                        className="menu menu-sm dropdown-content font-semibold bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                         {navList}
                     </ul>
                 </div>
@@ -29,7 +29,7 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Button</a>
+                <Link to={'/login'} className="">Login</Link>
             </div>
         </div>
     );

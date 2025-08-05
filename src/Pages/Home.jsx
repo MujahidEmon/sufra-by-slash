@@ -17,6 +17,7 @@ import 'swiper/css/navigation';
 
 // import required modules
 import { Navigation } from 'swiper/modules';
+import { Link } from 'react-router-dom';
 
 
 const Home = () => {
@@ -37,7 +38,7 @@ const Home = () => {
             <div className='mb-18'>
                 <PopularMenu></PopularMenu>
                 <div className='justify-center flex'>
-                    <button className='border-t-0 border-l-0 border-r-0 btn border-b-2 border-black m-10'>View Full Menu</button>
+                    <Link to={'/menu'} className='border-t-0 border-l-0 border-r-0 btn border-b-2 border-black m-10'>View Full Menu</Link>
                 </div>
             </div>
 

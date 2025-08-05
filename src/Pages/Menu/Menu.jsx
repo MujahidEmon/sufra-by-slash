@@ -26,16 +26,16 @@ const Menu = () => {
                 <MenuCategory items={offerItems} ></MenuCategory>
             </div>
             <div className='max-w-7xl mx-auto my-20'>
-                <MenuCategory items={dessertItems} title={'desserts'} subTitle={'Taste the Best Dessert Items'} img={dessertImg}></MenuCategory>
+                <MenuCategory items={dessertItems} title={'dessert'} subTitle={'Taste the Best Dessert Items'} img={dessertImg}></MenuCategory>
             </div>
             <div className='max-w-7xl mx-auto my-20'>
-                <MenuCategory items={saladItems} title={'Salads'} subTitle={'Want Salad? Get Yours'} img={saladImg}></MenuCategory>
+                <MenuCategory items={saladItems} title={'salad'} subTitle={'Want Salad? Get Yours'} img={saladImg}></MenuCategory>
             </div>
             <div className='max-w-7xl mx-auto my-20'>
-                <MenuCategory items={pizzaItems} title={'Pizzas'} subTitle={'Best Selling Pizzas In Your City'} img={pizzaImg}></MenuCategory>
+                <MenuCategory items={pizzaItems} title={'pizza'} subTitle={'Best Selling Pizzas In Your City'} img={pizzaImg}></MenuCategory>
             </div>
             <div className='max-w-7xl mx-auto my-20'>
-                <MenuCategory items={soupItems} title={'Soups'} subTitle={'Eat Healthy And Be Wealthy'} img={soupImg}></MenuCategory>
+                <MenuCategory items={soupItems} title={'soup'} subTitle={'Eat Healthy And Be Wealthy'} img={soupImg}></MenuCategory>
             </div>
             
         </div>
