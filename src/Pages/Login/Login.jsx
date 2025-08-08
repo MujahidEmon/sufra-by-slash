@@ -2,22 +2,27 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import useAuth from '../../Hooks/useAuth';
+import toast from 'react-hot-toast';
 // import { AuthContext } from '../../Provider/AuthProvider';
 // import Swal from 'sweetalert2'
 
 
 const Login = () => {
     const navigate = useNavigate()
+    const {signIn} = useAuth()
     const [isCaptchaMatched, setIsCaptchaMatched] = useState(true)
     const [showPass, setShowPass] = useState(false)
 
     const handleLogin = (email, password) => {
 
         
-        console.log(email, password);
-
-        alert('logged in', email)
-        navigate('/login')
+        signIn(email, password)
+        .then(res => {
+            console.log(res.user);
+            toast.success('Logged In')
+        })
+        navigate('/')
 
 
     }
@@ -27,7 +32,7 @@ const Login = () => {
     },[])
     const checkCaptcha =  (e) => {
         
-        // e.preventDefault()
+        e.preventDefault()
         const form = new FormData(e.currentTarget)
         const email = form.get('email')
         const password = form.get('password')
