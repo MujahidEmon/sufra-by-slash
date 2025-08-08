@@ -17,12 +17,10 @@ const Navbar = () => {
 
 
 
-
-
     const navList = <>
         <li><Link to={'/'}>Home</Link></li>
         <li><Link to={'/menu'}>Menu</Link></li>
-        <li><Link to={'/order/salads'}>Order Food</Link></li>
+        <li><Link to={'/order/salad'}>Order Food</Link></li>
         <li><Link to={'/cart'}>Cart</Link></li>
     </>
 

@@ -9,8 +9,7 @@ import DynamicTitle from '../../Components/DynamicTitle/DynamicTitle';
 import { useParams } from 'react-router-dom';
 const OrderFood = () => {
     const categories = ['salad', 'pizza', 'soup', 'dessert', 'drinks']
-    const {category} = useParams()
-    console.log(category);
+    const {category} = useParams();
     const initialIndex = categories.indexOf(category)
     const [tabIndex, setTabIndex] = useState(initialIndex);
     const items = useMenu();
