@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, replace, useLocation, useNavigate } from 'react-router-dom';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import useAuth from '../../Hooks/useAuth';
 import toast from 'react-hot-toast';
@@ -9,8 +9,13 @@ import toast from 'react-hot-toast';
 
 
 const Login = () => {
-    const navigate = useNavigate()
     const {signIn} = useAuth()
+    const navigate = useNavigate()
+    const location = useLocation();
+    
+    console.log(location);
+    const from = location.state || '/'
+
     const [isCaptchaMatched, setIsCaptchaMatched] = useState(true)
     const [showPass, setShowPass] = useState(false)
 
@@ -20,9 +25,10 @@ const Login = () => {
         signIn(email, password)
         .then(res => {
             console.log(res.user);
+            navigate
             toast.success('Logged In')
+            navigate(from, {replace: true});
         })
-        navigate('/')
 
 
     }
