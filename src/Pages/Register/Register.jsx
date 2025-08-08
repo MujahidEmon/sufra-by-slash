@@ -2,57 +2,161 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import { useForm } from 'react-hook-form';
+import DynamicTitle from '../../Components/DynamicTitle/DynamicTitle';
+import useAuth from '../../Hooks/useAuth';
 // import { AuthContext } from '../../Provider/AuthProvider';
 // import Swal from 'sweetalert2'
 
 
-const Login = () => {
+const Register = () => {
+    const {createUser} = useAuth();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
     const navigate = useNavigate()
     const [isCaptchaMatched, setIsCaptchaMatched] = useState(true)
     const [showPass, setShowPass] = useState(false)
 
-    const handleLogin = (email, password) => {
+    // const handleRegister = (email, password, name, password) => {
 
-        
-        console.log(email, password);
+const onSubmit = data =>{
+    createUser(data.email, data.password)
+    .then(res => {
+        console.log('logged user ', res);
+    })
+    
+}
 
-        alert('logged in', email)
-        navigate('/login')
 
 
-    }
 
-    useEffect(() => {
-        loadCaptchaEnginge(6); 
-    },[])
-    const checkCaptcha =  (e) => {
-        
-        // e.preventDefault()
-        const form = new FormData(e.currentTarget)
-        const email = form.get('email')
-        const password = form.get('password')
-        const captchaInputValue = form.get('captchaValue')
+    // }
 
-        if (validateCaptcha(captchaInputValue)) {
-            handleLogin(email, password)
-     }
+    // useEffect(() => {
+    //     loadCaptchaEnginge(6);
+    // }, [])
+    // const checkCaptcha = (e) => {
 
-     else {
-         alert('Captcha Does Not Match');
-     }
-    }
+    //     // e.preventDefault()
+    //     const form = new FormData(e.currentTarget)
+    //     const name = form.get('name')
+    //     const photo = form.get('photo')
+    //     const email = form.get('email')
+    //     const password = form.get('password')
+    //     const captchaInputValue = form.get('captchaValue')
+
+    //     if (validateCaptcha(captchaInputValue)) {
+    //         handleRegister(email, password, name, photo)
+    //     }
+
+    //     else {
+    //         alert('Captcha Does Not Match');
+    //     }
+    // }
     return (
         <div className="flex lg:w-2/3 w-full rounded-xl lg:max-w-xl  mx-auto  font-raleway justify-center ">
+            <DynamicTitle title={"Register"}></DynamicTitle>
             <form
-                onSubmit={checkCaptcha}
+                onSubmit={handleSubmit(onSubmit)}
                 className="max-w-lg w-full px-6 py-8 mx-auto"
             >
                 <div className="mb-6">
                     <h3 className="text-gray-800 font-rancho  text-center text-4xl font-bold">
-                        Login
+                        Register
                     </h3>
                 </div>
                 <div className="">
+                    <div>
+                        <label className="text-gray-800 font-rancho text-2xl block font-bold mt-4">
+                            Name
+                        </label>
+                        <div className="relative flex items-center">
+                            <input
+                                name="name"
+                                type="text"
+                                {...register('name', {required: true})}
+                                // required
+                                className="w-full text-sm text-gray-800 border-b border-gray-300 focus:border-blue-600 px-2 py-3 outline-none"
+                                placeholder="Enter Your Name"
+                            />
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="#bbb"
+                                stroke="#bbb"
+                                className="w-[18px] h-[18px] absolute right-2"
+                                viewBox="0 0 682.667 682.667"
+                            >
+                                <defs>
+                                    <clipPath id="a" clipPathUnits="userSpaceOnUse">
+                                        <path d="M0 512h512V0H0Z" data-original="#000000"></path>
+                                    </clipPath>
+                                </defs>
+                                <g
+                                    clipPath="url(#a)"
+                                    transform="matrix(1.33 0 0 -1.33 0 682.667)"
+                                >
+                                    <path
+                                        fill="none"
+                                        strokeMiterlimit="10"
+                                        strokeWidth="40"
+                                        d="M452 444H60c-22.091 0-40-17.909-40-40v-39.446l212.127-157.782c14.17-10.54 33.576-10.54 47.746 0L492 364.554V404c0 22.091-17.909 40-40 40Z"
+                                        data-original="#000000"
+                                    ></path>
+                                    <path
+                                        d="M472 274.9V107.999c0-11.027-8.972-20-20-20H60c-11.028 0-20 8.973-20 20V274.9L0 304.652V107.999c0-33.084 26.916-60 60-60h392c33.084 0 60 26.916 60 60v196.653Z"
+                                        data-original="#000000"
+                                    ></path>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <label className="text-gray-800 font-rancho text-2xl block font-bold mt-4">
+                            PhotoURL
+                        </label>
+                        <div className="relative flex items-center">
+                            <input
+                                name="photo"
+                                {...register('photo', {required: true})}
+                                type="text"
+                                // required
+                                className="w-full text-sm text-gray-800 border-b border-gray-300 focus:border-blue-600 px-2 py-3 outline-none"
+                                placeholder="Enter photoURL"
+                            />
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="#bbb"
+                                stroke="#bbb"
+                                className="w-[18px] h-[18px] absolute right-2"
+                                viewBox="0 0 682.667 682.667"
+                            >
+                                <defs>
+                                    <clipPath id="a" clipPathUnits="userSpaceOnUse">
+                                        <path d="M0 512h512V0H0Z" data-original="#000000"></path>
+                                    </clipPath>
+                                </defs>
+                                <g
+                                    clipPath="url(#a)"
+                                    transform="matrix(1.33 0 0 -1.33 0 682.667)"
+                                >
+                                    <path
+                                        fill="none"
+                                        strokeMiterlimit="10"
+                                        strokeWidth="40"
+                                        d="M452 444H60c-22.091 0-40-17.909-40-40v-39.446l212.127-157.782c14.17-10.54 33.576-10.54 47.746 0L492 364.554V404c0 22.091-17.909 40-40 40Z"
+                                        data-original="#000000"
+                                    ></path>
+                                    <path
+                                        d="M472 274.9V107.999c0-11.027-8.972-20-20-20H60c-11.028 0-20 8.973-20 20V274.9L0 304.652V107.999c0-33.084 26.916-60 60-60h392c33.084 0 60 26.916 60 60v196.653Z"
+                                        data-original="#000000"
+                                    ></path>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
                     <div>
                         <label className="text-gray-800 font-rancho text-2xl block font-bold mt-4">
                             Email
@@ -61,6 +165,7 @@ const Login = () => {
                             <input
                                 name="email"
                                 type="email"
+                                {...register('email', {required: true})}
                                 // required
                                 className="w-full text-sm text-gray-800 border-b border-gray-300 focus:border-blue-600 px-2 py-3 outline-none"
                                 placeholder="Enter email"
@@ -104,6 +209,7 @@ const Login = () => {
                         <div className="relative flex items-center">
                             <input
                                 name="password"
+                                {...register('password', {required: true})}
                                 type={showPass ? "text" : "password"}
                                 required
                                 className="w-full text-sm text-gray-800 border-b border-gray-300 focus:border-blue-600 px-2 py-3 outline-none"
@@ -124,7 +230,7 @@ const Login = () => {
                             </svg>
                         </div>
                     </div>
-                    <div className="mt-4 ">
+                    {/* <div className="mt-4 ">
                         <label className="text-gray-800 font-rancho text-2xl block font-bold ">
                             Validate Captcha
                         </label>
@@ -136,6 +242,7 @@ const Login = () => {
                                 name="captchaValue"
                                 type="text"
                                 required
+                                {...register('captchaValue', {required: true})}
                                 className="w-full text-sm text-gray-800 border-b border-gray-300 focus:border-blue-600 px-2 py-3 outline-none"
                                 placeholder="Enter Captcha"
                             />
@@ -153,7 +260,7 @@ const Login = () => {
                                 ></path>
                             </svg>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="flex flex-wrap items-center justify-between gap-4 mt-6">
                         <div className="flex items-center">
@@ -167,20 +274,20 @@ const Login = () => {
                                 htmlFor="remember-me"
                                 className="ml-1 block text-sm text-gray-800"
                             >
-                                Remember Me
+                                Accept Terms&Conditions
                             </label>
                         </div>
                     </div>
 
                     <div className="mt-6">
-                        <button className="btn font-rancho bg-[#FCAB35] text-xl w-full">Login</button>
+                        <button className="btn font-rancho bg-[#FCAB35] text-xl w-full">Register</button>
 
                         <p className="text-gray-800 text-sm text-center mt-2">
-                        Don't have an account ?{" "}
-                        <Link className="text-green-500 font-bold" to={"/register"}>
-                        Register
-                        </Link>
-                    </p>
+                            Already have an account ?{" "}
+                            <Link className="text-green-500 font-bold" to={"/login"}>
+                                Login Now
+                            </Link>
+                        </p>
                     </div>
                 </div>
 
@@ -209,4 +316,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;
