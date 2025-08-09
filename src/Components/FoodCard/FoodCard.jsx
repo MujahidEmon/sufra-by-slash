@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useCart from "../../Hooks/useCart";
 
 const FoodCard = ({ item }) => {
     const { user } = useAuth();
@@ -11,7 +12,7 @@ const FoodCard = ({ item }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const axiosSecure = useAxiosSecure();
-
+    const [, refetch] = useCart();
     const handleAddToCart = item => {
         if (user && user.email) {
             const cartItem = {
@@ -22,11 +23,15 @@ const FoodCard = ({ item }) => {
                 price,
                 email: user.email
             }
-            axiosSecure.post ('/cart', cartItem)
+            axiosSecure.post (`/cart`, cartItem)
             .then(res => {
                 console.log(res.data);
-                res.data.insertedId && toast.success(`${name} added to cart`)
+                if(res.data.insertedId) {
+                   toast.success(`${name} added to cart`)
+                   refetch();
+                }
             })
+            
             return;
         }
         Swal.fire({

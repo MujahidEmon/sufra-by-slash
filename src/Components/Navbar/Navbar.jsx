@@ -5,7 +5,7 @@ import useCart from "../../Hooks/useCart";
 
 const Navbar = () => {
     const { user, logout } = useAuth()
-    const cart = useCart();
+    const [cart] = useCart();
     console.log(cart);
 
     const handleLogout = () => {
@@ -24,7 +24,7 @@ const Navbar = () => {
         <li><Link to={'/'}>Home</Link></li>
         <li><Link to={'/menu'}>Menu</Link></li>
         <li><Link to={'/order/salad'}>Order Food</Link></li>
-        <li><Link to={'/cart'}>Cart</Link></li>
+        <li><Link to={'/cart'}>Cart <p className="badge badge-accent">{cart.length}</p></Link></li>
     </>
 
 
