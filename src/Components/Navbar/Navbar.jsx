@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
+import useCart from "../../Hooks/useCart";
 
 const Navbar = () => {
     const { user, logout } = useAuth()
+    const cart = useCart();
+    console.log(cart);
 
     const handleLogout = () => {
         logout()
