@@ -5,12 +5,15 @@ import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, val
 import { useForm } from 'react-hook-form';
 import DynamicTitle from '../../Components/DynamicTitle/DynamicTitle';
 import useAuth from '../../Hooks/useAuth';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import toast from 'react-hot-toast';
 // import { AuthContext } from '../../Provider/AuthProvider';
 // import Swal from 'sweetalert2'
 
 
 const Register = () => {
-    const {createUser} = useAuth();
+    const { createUser, updateUserProfile, googleSignIn } = useAuth();
+    const axiosPublic = useAxiosPublic();
     const {
         register,
         handleSubmit,
@@ -22,40 +25,52 @@ const Register = () => {
 
     // const handleRegister = (email, password, name, password) => {
 
-const onSubmit = data =>{
-    createUser(data.email, data.password)
-    .then(res => {
-        console.log('logged user ', res);
-    })
-    
-}
+    const onSubmit = data => {
+        const n = data.name;
+        const loggedUser = {
+            email: data.email,
+            name: data.name
+        }
+        createUser(data.email, data.password)
+            .then(res => {
+                updateUserProfile(data.name, data.photo)
+                axiosPublic.post('/users', loggedUser)
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.insertedId) {
+                            toast.success(`Thanks ${n}, your info is added to DB`);
+                        }
+                    })
+
+                console.log('logged user ', res);
+
+            })
 
 
+    }
 
+    const handleGoogleLogin = () => {
+        googleSignIn()
+            .then(res => {
+                const loggedUser = {
+                    email: res.user.email,
+                    name: res.user.displayName
+                }
 
-    // }
+                updateUserProfile(res.user.displayName, res.user.photoURL)
+                axiosPublic.post('/users', loggedUser)
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.insertedId) {
+                            toast.success(`Thanks , your info is added to DB`);
+                        }
+                    })
 
-    // useEffect(() => {
-    //     loadCaptchaEnginge(6);
-    // }, [])
-    // const checkCaptcha = (e) => {
+                console.log('logged user ', res);
 
-    //     // e.preventDefault()
-    //     const form = new FormData(e.currentTarget)
-    //     const name = form.get('name')
-    //     const photo = form.get('photo')
-    //     const email = form.get('email')
-    //     const password = form.get('password')
-    //     const captchaInputValue = form.get('captchaValue')
+            })
+    }
 
-    //     if (validateCaptcha(captchaInputValue)) {
-    //         handleRegister(email, password, name, photo)
-    //     }
-
-    //     else {
-    //         alert('Captcha Does Not Match');
-    //     }
-    // }
     return (
         <div className="flex lg:w-2/3 w-full rounded-xl lg:max-w-xl  mx-auto  font-raleway justify-center ">
             <DynamicTitle title={"Register"}></DynamicTitle>
@@ -77,7 +92,7 @@ const onSubmit = data =>{
                             <input
                                 name="name"
                                 type="text"
-                                {...register('name', {required: true})}
+                                {...register('name', { required: true })}
                                 // required
                                 className="w-full text-sm text-gray-800 border-b border-gray-300 focus:border-blue-600 px-2 py-3 outline-none"
                                 placeholder="Enter Your Name"
@@ -120,7 +135,7 @@ const onSubmit = data =>{
                         <div className="relative flex items-center">
                             <input
                                 name="photo"
-                                {...register('photo', {required: true})}
+                                {...register('photo', { required: true })}
                                 type="text"
                                 // required
                                 className="w-full text-sm text-gray-800 border-b border-gray-300 focus:border-blue-600 px-2 py-3 outline-none"
@@ -165,7 +180,7 @@ const onSubmit = data =>{
                             <input
                                 name="email"
                                 type="email"
-                                {...register('email', {required: true})}
+                                {...register('email', { required: true })}
                                 // required
                                 className="w-full text-sm text-gray-800 border-b border-gray-300 focus:border-blue-600 px-2 py-3 outline-none"
                                 placeholder="Enter email"
@@ -209,7 +224,7 @@ const onSubmit = data =>{
                         <div className="relative flex items-center">
                             <input
                                 name="password"
-                                {...register('password', {required: true})}
+                                {...register('password', { required: true })}
                                 type={showPass ? "text" : "password"}
                                 required
                                 className="w-full text-sm text-gray-800 border-b border-gray-300 focus:border-blue-600 px-2 py-3 outline-none"
@@ -299,7 +314,7 @@ const onSubmit = data =>{
 
                 <div className=" flex items-center gap-6 justify-center">
                     <button
-                        //   onClick={handleGoogleLogin}
+                        onClick={handleGoogleLogin}
                         className="btn btn-circle"
                     >
                         <FaGoogle size={30}></FaGoogle>
