@@ -3,6 +3,7 @@ import SectionHeading from "../../../../Components/SectionHeading/SectionHeading
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import TableRow from "../../../../Components/TableRow/TableRow";
 import { TiTrash } from "react-icons/ti";
+import Swal from "sweetalert2";
 
 const AllUsers = () => {
     const axiosSecure = useAxiosSecure();
@@ -14,6 +15,35 @@ const AllUsers = () => {
             return res.data;
         }
     });
+
+
+    const handleDelete = id => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                axiosSecure.delete(`/users/${id}`)
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.deletedCount > 0) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: `${name} removed form cart`,
+                                icon: "success"
+                            });
+                            refetch();
+                        }
+                    })
+            }
+        });
+    }
     console.log(users);
     return (
         <div className="-mt-14">
@@ -47,7 +77,7 @@ const AllUsers = () => {
                                         <td>{user.name}</td>
                                         <td>{user.email}</td>
                                         <th>
-                                            <button className="btn bg-red-600 btn-sm"><TiTrash color='white' size={20}></TiTrash></button>
+                                            <button onClick={() => handleDelete(user._id)} className="btn bg-red-600 btn-sm"><TiTrash color='white' size={20}></TiTrash></button>
                                         </th>
                                     </tr>
                                 )
