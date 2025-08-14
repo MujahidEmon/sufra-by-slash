@@ -4,6 +4,7 @@ import { Link, replace, useLocation, useNavigate } from 'react-router-dom';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import useAuth from '../../Hooks/useAuth';
 import toast from 'react-hot-toast';
+import GoogleLogin from './GoogleLogin';
 // import { AuthContext } from '../../Provider/AuthProvider';
 // import Swal from 'sweetalert2'
 
@@ -202,12 +203,7 @@ const Login = () => {
                 </div>
 
                 <div className=" flex items-center gap-6 justify-center">
-                    <button
-                        //   onClick={handleGoogleLogin}
-                        className="btn btn-circle"
-                    >
-                        <FaGoogle size={30}></FaGoogle>
-                    </button>
+                    <GoogleLogin></GoogleLogin>
                     <button
                         //   onClick={handleGitHubLogin}
                         className="btn btn-circle"

@@ -7,6 +7,7 @@ import DynamicTitle from '../../Components/DynamicTitle/DynamicTitle';
 import useAuth from '../../Hooks/useAuth';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import toast from 'react-hot-toast';
+import GoogleLogin from '../Login/GoogleLogin';
 // import { AuthContext } from '../../Provider/AuthProvider';
 // import Swal from 'sweetalert2'
 
@@ -47,28 +48,6 @@ const Register = () => {
             })
 
 
-    }
-
-    const handleGoogleLogin = () => {
-        googleSignIn()
-            .then(res => {
-                const loggedUser = {
-                    email: res.user.email,
-                    name: res.user.displayName
-                }
-
-                updateUserProfile(res.user.displayName, res.user.photoURL)
-                axiosPublic.post('/users', loggedUser)
-                    .then(res => {
-                        console.log(res.data);
-                        if (res.data.insertedId) {
-                            toast.success(`Thanks , your info is added to DB`);
-                        }
-                    })
-
-                console.log('logged user ', res);
-
-            })
     }
 
     return (
@@ -313,12 +292,7 @@ const Register = () => {
                 </div>
 
                 <div className=" flex items-center gap-6 justify-center">
-                    <button
-                        onClick={handleGoogleLogin}
-                        className="btn btn-circle"
-                    >
-                        <FaGoogle size={30}></FaGoogle>
-                    </button>
+                    <GoogleLogin></GoogleLogin>
                     <button
                         //   onClick={handleGitHubLogin}
                         className="btn btn-circle"

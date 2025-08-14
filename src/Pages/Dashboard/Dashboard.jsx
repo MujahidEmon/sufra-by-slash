@@ -24,7 +24,7 @@ const Dashboard = () => {
                     <li><Link><FaUtensilSpoon></FaUtensilSpoon> Add Item</Link></li>
                     <li><Link><FaHamburger></FaHamburger> Manage Items</Link></li>
                     <li><Link><FaBook></FaBook>Manage Bookings</Link></li>
-                    <li><Link><FaUsers></FaUsers> All Users</Link></li>
+                    <li><Link to={'/dashboard/allUsers'}><FaUsers></FaUsers> All Users</Link></li>
                     <li><Link to={'/dashboard/cart'}><FaShoppingCart></FaShoppingCart> My Cart</Link></li>
                     <div className="divider"></div>
                     <li><Link to={'/'}><FaHome></FaHome>Home</Link></li>
