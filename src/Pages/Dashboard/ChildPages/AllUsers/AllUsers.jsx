@@ -4,6 +4,8 @@ import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import TableRow from "../../../../Components/TableRow/TableRow";
 import { TiTrash } from "react-icons/ti";
 import Swal from "sweetalert2";
+import { FaUserPlus } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const AllUsers = () => {
     const axiosSecure = useAxiosSecure();
@@ -15,6 +17,19 @@ const AllUsers = () => {
             return res.data;
         }
     });
+
+
+    const handleMakeAdmin = user => {
+        axiosSecure.patch(`/users/admin/${user._id}`)
+        .then(res => {
+            console.log(res.data);
+
+            if(res.data.modifiedCount > 0){
+                refetch();
+                toast.success(`${user.name} is now an Admin`)
+            }
+        })
+    }
 
 
     const handleDelete = id => {
@@ -35,7 +50,7 @@ const AllUsers = () => {
                         if (res.data.deletedCount > 0) {
                             Swal.fire({
                                 title: "Deleted!",
-                                text: `${name} removed form cart`,
+                                text: `User Deleted`,
                                 icon: "success"
                             });
                             refetch();
@@ -67,15 +82,18 @@ const AllUsers = () => {
                         </thead>
                         <tbody>
                             {
-                                users.map(user =>
+                                users.map((user, index) =>
                                     <tr>
                                         <th>
-                                            #
+                                            {index + 1}
                                         </th>
-                                        <td>
-                                        </td>
                                         <td>{user.name}</td>
                                         <td>{user.email}</td>
+                                        <td>
+                                            <div className="tooltip" data-tip="Make Admin">
+                                                <button onClick={() => handleMakeAdmin(user)} className="btn bg-cyan-600   btn-sm "><FaUserPlus color='white' size={20} /></button>
+                                            </div>
+                                        </td>
                                         <th>
                                             <button onClick={() => handleDelete(user._id)} className="btn bg-red-600 btn-sm"><TiTrash color='white' size={20}></TiTrash></button>
                                         </th>
