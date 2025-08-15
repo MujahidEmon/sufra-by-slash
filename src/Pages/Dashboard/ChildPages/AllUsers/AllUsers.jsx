@@ -13,22 +13,28 @@ const AllUsers = () => {
     const { data: users = [], isLoading, isError, error, refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await axiosSecure.get('/users');
+            const res = await axiosSecure.get('/users',
+                {
+                    headers: {
+                        authorization: `bearer ${localStorage.getItem('access-token')}`
+                    }
+                });
             return res.data;
         }
     });
 
 
     const handleMakeAdmin = user => {
-        axiosSecure.patch(`/users/admin/${user._id}`)
-        .then(res => {
-            console.log(res.data);
+        axiosSecure.patch(`/users/admin/${user._id}`
+        )
+            .then(res => {
+                console.log(res.data);
 
-            if(res.data.modifiedCount > 0){
-                refetch();
-                toast.success(`${user.name} is now an Admin`)
-            }
-        })
+                if (res.data.modifiedCount > 0) {
+                    refetch();
+                    toast.success(`${user.name} is now an Admin`)
+                }
+            })
     }
 
 
