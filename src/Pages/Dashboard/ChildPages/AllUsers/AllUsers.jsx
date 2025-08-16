@@ -13,12 +13,7 @@ const AllUsers = () => {
     const { data: users = [], isLoading, isError, error, refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await axiosSecure.get('/users',
-                {
-                    headers: {
-                        authorization: `bearer ${localStorage.getItem('access-token')}`
-                    }
-                });
+            const res = await axiosSecure.get('/users');
             return res.data;
         }
     });
@@ -96,9 +91,13 @@ const AllUsers = () => {
                                         <td>{user.name}</td>
                                         <td>{user.email}</td>
                                         <td>
-                                            <div className="tooltip" data-tip="Make Admin">
-                                                <button onClick={() => handleMakeAdmin(user)} className="btn bg-cyan-600   btn-sm "><FaUserPlus color='white' size={20} /></button>
-                                            </div>
+                                            {
+                                                user?.role === 'admin' ?
+                                                    <button className="btn btn-disabled">Admin</button> :
+                                                    <div className="tooltip" data-tip="Make Admin">
+                                                        <button onClick={() => handleMakeAdmin(user)} className="btn bg-cyan-600   btn-sm "><FaUserPlus color='white' size={20} /></button>
+                                                    </div>
+                                            }
                                         </td>
                                         <th>
                                             <button onClick={() => handleDelete(user._id)} className="btn bg-red-600 btn-sm"><TiTrash color='white' size={20}></TiTrash></button>

@@ -189,7 +189,7 @@ const Login = () => {
 
                         <p className="text-gray-800 text-sm text-center mt-2">
                         Don't have an account ?{" "}
-                        <Link className="text-green-500 font-bold" to={"/register"}>
+                        <Link state={from} className="text-green-500 font-bold" to={"/register"}>
                         Register
                         </Link>
                     </p>

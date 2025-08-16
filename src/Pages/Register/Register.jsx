@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import { useForm } from 'react-hook-form';
 import DynamicTitle from '../../Components/DynamicTitle/DynamicTitle';
@@ -15,12 +15,15 @@ import GoogleLogin from '../Login/GoogleLogin';
 const Register = () => {
     const { createUser, updateUserProfile, googleSignIn } = useAuth();
     const axiosPublic = useAxiosPublic();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state || '/'
+    console.log(location);
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
-    const navigate = useNavigate()
     const [isCaptchaMatched, setIsCaptchaMatched] = useState(true)
     const [showPass, setShowPass] = useState(false)
 
@@ -42,7 +45,7 @@ const Register = () => {
                             toast.success(`Thanks ${n}, your info is added to DB`);
                         }
                     })
-
+                    navigate(from, {replace: true})
                 console.log('logged user ', res);
 
             })
