@@ -2,13 +2,16 @@ import { useForm } from "react-hook-form";
 import { FaUtensils } from "react-icons/fa";
 import SectionHeading from "../../../../Components/SectionHeading/SectionHeading";
 import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 
 const imageApiKey = import.meta.env.VITE_IMAGE_API
 const imageHostingAPI = `https://api.imgbb.com/1/upload?key=${imageApiKey}`
 const AddItem = () => {
-
+    const axiosSecure = useAxiosSecure();
     const axiosPublic = useAxiosPublic();
     const { register, handleSubmit } = useForm()
+
+
     const onSubmit = async (data) => {
         console.log(data);
         const imageFile = { image: data.image[0] }
@@ -18,6 +21,20 @@ const AddItem = () => {
 
             }
         })
+
+        if(res.data.success){
+            const menuItem = {
+                name: data.name,
+                recipe: data.recipe,
+                category: data.category,
+                price: parseFloat(data.price),
+                image: res.data.display_url
+
+            }
+
+            const menuRes = await axiosSecure.post('/menu', menuItem)
+            console.log(menuRes.data);
+        }
         console.log(res.data);
     }
     return (

@@ -6,7 +6,7 @@ import useCart from "../../Hooks/useCart";
 const Navbar = () => {
     const { user, logout } = useAuth()
     const [cart] = useCart();
-    console.log(cart);
+    // console.log(cart);
 
     const handleLogout = () => {
         logout()

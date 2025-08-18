@@ -12,12 +12,13 @@ const OrderFood = () => {
     const {category} = useParams();
     const initialIndex = categories.indexOf(category)
     const [tabIndex, setTabIndex] = useState(initialIndex);
-    const items = useMenu();
-    const drinksItems = items.filter(item => item.category === 'drinks')
-    const dessertItems = items.filter(item => item.category === 'dessert')
-    const saladItems = items.filter(item => item.category === 'salad')
-    const pizzaItems = items.filter(item => item.category === 'pizza')
-    const soupItems = items.filter(item => item.category === 'soup')
+    const [menu, refetch] = useMenu();
+    // console.log(menu);
+    const drinksItems = menu.filter(item => item.category === 'drinks')
+    const dessertItems = menu.filter(item => item.category === 'dessert')
+    const saladItems = menu.filter(item => item.category === 'salad')
+    const pizzaItems = menu.filter(item => item.category === 'pizza')
+    const soupItems = menu.filter(item => item.category === 'soup')
     return (
 
         <div>
