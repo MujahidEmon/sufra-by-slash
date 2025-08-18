@@ -1,12 +1,24 @@
 import { useForm } from "react-hook-form";
 import { FaUtensils } from "react-icons/fa";
 import SectionHeading from "../../../../Components/SectionHeading/SectionHeading";
+import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
 
+const imageApiKey = import.meta.env.VITE_IMAGE_API
+const imageHostingAPI = `https://api.imgbb.com/1/upload?key=${imageApiKey}`
 const AddItem = () => {
 
+    const axiosPublic = useAxiosPublic();
     const { register, handleSubmit } = useForm()
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log(data);
+        const imageFile = { image: data.image[0] }
+        const res = await axiosPublic.post(imageHostingAPI, imageFile, {
+            headers: {
+                'content-type': 'multipart/form-data'
+
+            }
+        })
+        console.log(res.data);
     }
     return (
         <div>
