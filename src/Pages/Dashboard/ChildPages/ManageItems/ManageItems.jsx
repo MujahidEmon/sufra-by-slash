@@ -2,9 +2,39 @@ import { TiTrash } from "react-icons/ti";
 import SectionHeading from "../../../../Components/SectionHeading/SectionHeading";
 import useMenu from "../../../../Hooks/useMenu";
 import { FaEdit } from "react-icons/fa";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const ManageItems = () => {
     const [menu, refetch] = useMenu();
+    const axiosSecure = useAxiosSecure()
+    const handleDelete = id => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                axiosSecure.delete(`/menu/${id}`)
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.deletedCount > 0) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: `${name} removed form cart`,
+                                icon: "success"
+                            });
+                            refetch();
+                        }
+                    })
+            }
+        });
+    }
     return (
         <div>
             <div className="-my-12">
@@ -36,7 +66,7 @@ const ManageItems = () => {
                                 menu.map((item, index) =>
                                     <tr>
                                         <th>
-                                            {index+1}
+                                            {index + 1}
                                         </th>
                                         <td>
                                             <div className="avatar">
@@ -53,7 +83,7 @@ const ManageItems = () => {
                                             <button className="btn btn-accent  btn-sm shadow-none"><FaEdit color='white' size={20}></FaEdit></button>
                                         </th>
                                         <th>
-                                            <button className="btn btn-accent  btn-sm shadow-none"><TiTrash color='white' size={20}></TiTrash></button>
+                                            <button onClick={() => handleDelete(item._id)} className="btn btn-accent  btn-sm shadow-none"><TiTrash color='white' size={20}></TiTrash></button>
                                         </th>
                                     </tr>
                                 )
