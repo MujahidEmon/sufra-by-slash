@@ -20,9 +20,7 @@ const Dashboard = () => {
             </div>
             <div className="drawer-side">
                 <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-                <h1 className="font-semibold text-2xl mx-auto " style={{
-                    fontFamily: "cursive"
-                }}>SUFRA by SLASH</h1>
+                <h1 className="font-bold py-6 w-full  text-center bg-gradient-to-r from-gray-300 to-cyan-200 text-3xl mx-auto "><span className="text-blue-950">SUFRA</span> by S<span className="text-red-600">L</span>ASH</h1>
                 <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
                     {/* Sidebar content here */}
                     {/* <li><Link><FaUser></FaUser> Admin Home</Link></li>

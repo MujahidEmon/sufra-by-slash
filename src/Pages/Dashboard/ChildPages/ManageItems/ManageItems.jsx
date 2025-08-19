@@ -4,8 +4,11 @@ import useMenu from "../../../../Hooks/useMenu";
 import { FaEdit } from "react-icons/fa";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const ManageItems = () => {
+    
     const [menu, refetch] = useMenu();
     const axiosSecure = useAxiosSecure()
     const handleDelete = id => {
@@ -80,7 +83,7 @@ const ManageItems = () => {
                                         <td>{item.name}</td>
                                         <td className="">{item.price}$</td>
                                         <th>
-                                            <button className="btn btn-accent  btn-sm shadow-none"><FaEdit color='white' size={20}></FaEdit></button>
+                                            <Link to={`/dashboard/updateItem/${item._id}`}  className="btn btn-accent  btn-sm shadow-none"><FaEdit color='white' size={20}></FaEdit></Link>
                                         </th>
                                         <th>
                                             <button onClick={() => handleDelete(item._id)} className="btn btn-accent  btn-sm shadow-none"><TiTrash color='white' size={20}></TiTrash></button>

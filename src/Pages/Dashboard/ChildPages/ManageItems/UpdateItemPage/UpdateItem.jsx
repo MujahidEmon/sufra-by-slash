@@ -1,16 +1,23 @@
-import { useForm } from "react-hook-form";
-import { FaUtensils } from "react-icons/fa";
-import SectionHeading from "../../../../Components/SectionHeading/SectionHeading";
-import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
-import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { FaUtensils } from 'react-icons/fa';
+import { useLoaderData } from 'react-router-dom';
+import useAxiosSecure from '../../../../../Hooks/useAxiosSecure';
+import useAxiosPublic from '../../../../../Hooks/useAxiosPublic';
+import toast from 'react-hot-toast';
 
 const imageApiKey = import.meta.env.VITE_IMAGE_API
 const imageHostingAPI = `https://api.imgbb.com/1/upload?key=${imageApiKey}`
-const AddItem = () => {
+
+const UpdateItem = () => {
+    const item = useLoaderData();
     const axiosSecure = useAxiosSecure();
     const axiosPublic = useAxiosPublic();
-    const { register, handleSubmit } = useForm()
 
+    const { name, recipe, price, category, image, _id } = item;
+    console.log(item);
+
+    const { register, handleSubmit } = useForm()
 
     const onSubmit = async (data) => {
         console.log(data);
@@ -22,7 +29,7 @@ const AddItem = () => {
             }
         })
 
-        if(res.data.success){
+        if (res.data.success) {
             const menuItem = {
                 name: data.name,
                 recipe: data.recipe,
@@ -31,19 +38,18 @@ const AddItem = () => {
                 image: res.data.data.display_url
 
             }
-            console.log(res.data.data.display_url);
 
-            const menuRes = await axiosSecure.post('/menu', menuItem)
+            const menuRes = await axiosSecure.patch(`/menu/${_id}`, menuItem)
             console.log(menuRes.data);
+            if(menuRes.data.modifiedCount>0){
+                toast.success(`${name} is updated`)
+            }
         }
         console.log(res.data);
     }
     return (
         <div>
-            <div className="-my-12">
-                <SectionHeading heading={'Add an Item'} subheading={'Want to Add?'}></SectionHeading>
-            </div>
-
+            <h1 className="my-12 font-semibold text-center text-3xl">UPDATE ITEM</h1>
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="max-w-4xl mx-auto space-y-6 bg-white p-12 "
@@ -56,6 +62,7 @@ const AddItem = () => {
                     </label>
                     <input
                         type="text"
+                        defaultValue={name}
                         {...register('name', { required: true })}
                         placeholder="Enter product name"
                         className="input bg-base-100 mt-2 w-full text-sm border-b-2 border-gray-100 focus:border-[#333] outline-none"
@@ -73,7 +80,7 @@ const AddItem = () => {
                         </label>
                         <select
                             {...register('category', { required: true })}
-                            defaultValue="Select A Category" className="select w-full mt-2">
+                            defaultValue={category} className="select w-full mt-2">
                             <option disabled={true}>Select A Category</option>
                             <option value={'salad'}>Salad</option>
                             <option value={'pizza'}>Pizza</option>
@@ -91,6 +98,7 @@ const AddItem = () => {
                         </label>
                         <input
                             type="text"
+                            defaultValue={price}
                             {...register('price', { required: true })}
                             placeholder="Enter price"
                             className="input bg-base-100 w-full text-sm border-b-2 mt-2 border-gray-100 focus:border-[#333] outline-none"
@@ -105,6 +113,7 @@ const AddItem = () => {
                         Recipe Details*
                     </label>
                     <textarea
+                        defaultValue={recipe}
                         placeholder="Recipe Details"
                         {...register('recipe', { required: true })}
                         className="px-2 pt-5 pb-2 pr-8 bg-base-100 mt-2 w-full text-sm border-b-2 border-gray-100 focus:border-[#333] outline-none resize-none"
@@ -114,23 +123,27 @@ const AddItem = () => {
                 </div>
 
                 {/* Image Upload */}
-                <div className="form-control">
-                    {/* <label className="text-slate-900 text-lg font-semibold ">
-                        Product Image
-                    </label> */}
-                    <input
-                        {...register('image', { required: true })}
-                        type="file" className="file-input file-input-ghost" />
+
+                <div className="form-control flex flex-row items-end gap-6 justify-evenly">
+                    <img src={image} alt="" className='rounded-xl w-1/2' />
+                    <div className='w-1/2'>
+                        <label htmlFor="image" className='font-semibold text-xl'>Want to Change Image?</label>
+                        <input
+                            {...register('image', { required: true })}
+                            type="file" placeholder='jj' className="file-input file-input-ghost mt-4" />
+                    </div>
                 </div>
 
-                <button
-                    className=" btn w-fit rounded-sm text-sm font-medium bg-[#09bf09] cursor-pointer hover:bg-[#222] text-white"
-                >
-                    Add Product <FaUtensils></FaUtensils>
-                </button>
+                <div className='items-center flex justify-center'>
+                    <button
+                        className=" btn w-fit rounded-sm text-sm font-medium bg-[#09bf09] cursor-pointer hover:bg-[#222] text-white"
+                    >
+                        Update This Menu <FaUtensils></FaUtensils>
+                    </button>
+                </div>
             </form>
         </div>
     );
 };
 
-export default AddItem;
+export default UpdateItem;
