@@ -15,6 +15,7 @@ import AdminRoutes from "./AdminRoutes";
 import AddItem from "../Pages/Dashboard/ChildPages/AddItem/AddItem";
 import ManageItems from "../Pages/Dashboard/ChildPages/ManageItems/ManageItems";
 import UpdateItem from "../Pages/Dashboard/ChildPages/ManageItems/UpdateItemPage/UpdateItem";
+import Checkout from "../Pages/CheckoutPage/Checkout";
 
 const router = createBrowserRouter([
     {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
             {
                 path: 'manageItems',
                 element: <AdminRoutes><ManageItems></ManageItems></AdminRoutes>
+            },
+            {
+                path: 'checkout',
+                element: <PrivateRoutes><Checkout></Checkout></PrivateRoutes>
             },
             {
                 path: 'updateItem/:id',

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SectionHeading from "../../../../Components/SectionHeading/SectionHeading";
 import TableRow from "../../../../Components/TableRow/TableRow";
 import useCart from "../../../../Hooks/useCart";
@@ -13,7 +14,7 @@ const MyCart = () => {
                     <div className="flex mx-12 mb-6 font-semibold flex-row justify-between items-center">
                         <h1>Total Items: {cart.length}</h1>
                         <h1>Total Price: ${totalPrice}</h1>
-                        <button className="btn btn-primary shadow-none">Pay</button>
+                        <Link to={'/dashboard/checkout'} className="btn btn-primary shadow-none">Pay</Link>
                     </div>
             <div className="mx-12 bg-white p-8">
                 <div className="overflow-x-auto">
