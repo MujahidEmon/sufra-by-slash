@@ -99,6 +99,7 @@ const AuthProvider = ({ children }) => {
     const AuthInfo = {
         user,
         loading,
+        setLoading,
         createUser,
         signIn,
         logout,
