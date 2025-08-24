@@ -70,17 +70,18 @@ const Checkout = () => {
         }
         else {
             console.log('trId: ', paymentIntent.id);
-            const paymentInfo = {
+            const orderInfo = {
                 email: user?.email,
                 name: user?.displayName,
                 cartIds: cart.map(c => c._id),
-                menuIds: cart.map(c => c.MenuId),
+                menuIds: cart.map(c => c.menuId),
                 date: new Date(),
                 price: totalPrice,
-                transactionId: paymentMethod.id
+                transactionId: paymentMethod.id,
+                orderStatus: 'Pending'
             }
 
-            const paymentRes = await axiosSecure.post('/payments', paymentInfo);
+            const paymentRes = await axiosSecure.post('/payments', orderInfo);
             console.log(paymentRes.data);
         }
     }

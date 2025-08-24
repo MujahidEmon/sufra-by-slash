@@ -17,6 +17,7 @@ import ManageItems from "../Pages/Dashboard/ChildPages/ManageItems/ManageItems";
 import UpdateItem from "../Pages/Dashboard/ChildPages/ManageItems/UpdateItemPage/UpdateItem";
 import Checkout from "../Pages/CheckoutPage/Checkout";
 import Payment from "../Pages/Payment/Payment";
+import PaymentHistory from "../Pages/Dashboard/ChildPages/PaymentHistory/PaymentHistory";
 
 const router = createBrowserRouter([
     {
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
             {
                 path: 'checkout',
                 element: <PrivateRoutes><Payment></Payment></PrivateRoutes>
+            },
+            {
+                path: 'paymentHistory',
+                element: <PrivateRoutes><PaymentHistory></PaymentHistory></PrivateRoutes>
             },
             {
                 path: 'updateItem/:id',
