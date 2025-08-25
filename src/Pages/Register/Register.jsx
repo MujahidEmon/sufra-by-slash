@@ -33,7 +33,8 @@ const Register = () => {
         const n = data.name;
         const loggedUser = {
             email: data.email,
-            name: data.name
+            name: data.name,
+            role: ''
         }
         createUser(data.email, data.password)
             .then(res => {

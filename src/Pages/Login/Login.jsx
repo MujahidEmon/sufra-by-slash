@@ -17,7 +17,6 @@ const Login = () => {
     console.log(location);
     const from = location.state || '/'
 
-    const [isCaptchaMatched, setIsCaptchaMatched] = useState(true)
     const [showPass, setShowPass] = useState(false)
 
     const handleLogin = (email, password) => {

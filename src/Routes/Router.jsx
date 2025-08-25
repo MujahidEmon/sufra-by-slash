@@ -18,6 +18,8 @@ import UpdateItem from "../Pages/Dashboard/ChildPages/ManageItems/UpdateItemPage
 import Checkout from "../Pages/CheckoutPage/Checkout";
 import Payment from "../Pages/Payment/Payment";
 import PaymentHistory from "../Pages/Dashboard/ChildPages/PaymentHistory/PaymentHistory";
+import UserHome from "../Pages/Dashboard/ChildPages/UserHome/UserHome";
+import AdminHome from "../Pages/Dashboard/ChildPages/AdminHome/AdminHome";
 
 const router = createBrowserRouter([
     {
@@ -25,8 +27,8 @@ const router = createBrowserRouter([
         element: <Root></Root>,
         children: [
             {
-                path:'/',
-                element:<Home></Home>
+                path: '/',
+                element: <Home></Home>
             },
             {
                 path: 'menu',
@@ -50,9 +52,11 @@ const router = createBrowserRouter([
         path: 'dashboard',
         element: <PrivateRoutes><Dashboard></Dashboard></PrivateRoutes>,
         children: [
+
+            // Admin Only
             {
-                path: 'cart',
-                element:<MyCart></MyCart>
+                path: 'adminHome',
+                element: <AdminRoutes><AdminHome></AdminHome></AdminRoutes>
             },
             {
                 path: 'allUsers',
@@ -67,17 +71,28 @@ const router = createBrowserRouter([
                 element: <AdminRoutes><ManageItems></ManageItems></AdminRoutes>
             },
             {
+                path: 'updateItem/:id',
+                element: <AdminRoutes><UpdateItem></UpdateItem></AdminRoutes>,
+                loader: ({ params }) => fetch(`http://localhost:5000/menu/${params.id}`)
+            },
+
+
+            // Normal Users
+            {
+                path: 'userHome',
+                element: <PrivateRoutes><UserHome></UserHome></PrivateRoutes>
+            },
+            {
+                path: 'cart',
+                element: <MyCart></MyCart>
+            },
+            {
                 path: 'checkout',
                 element: <PrivateRoutes><Payment></Payment></PrivateRoutes>
             },
             {
                 path: 'paymentHistory',
                 element: <PrivateRoutes><PaymentHistory></PaymentHistory></PrivateRoutes>
-            },
-            {
-                path: 'updateItem/:id',
-                element: <AdminRoutes><UpdateItem></UpdateItem></AdminRoutes>,
-                loader: ({params}) => fetch(`http://localhost:5000/menu/${params.id}`)
             },
         ]
     }

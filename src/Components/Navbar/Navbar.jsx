@@ -2,10 +2,14 @@ import { Link } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
 import useCart from "../../Hooks/useCart";
+import useAdmin from "../../Hooks/useAdmin";
 
 const Navbar = () => {
     const { user, logout } = useAuth()
     const [cart] = useCart();
+    const [isAdmin] = useAdmin()
+    // console.log('check is admin in Navbar',user,  isAdmin);
+    // console.log(user);
     // console.log(cart);
 
     const handleLogout = () => {
@@ -25,7 +29,13 @@ const Navbar = () => {
         <li><Link to={'/menu'}>Menu</Link></li>
         <li><Link to={'/order/salad'}>Order Food</Link></li>
         <li><Link to={'/dashboard/cart'}>Cart <p className="badge badge-accent">{cart.length}</p></Link></li>
-        <li><Link to={'/dashboard'}>Dashboard</Link></li>
+        <li>
+            {
+                isAdmin ?
+                <Link to={'/dashboard/adminHome'}>Dashboard</Link> :
+                <Link to={'/dashboard/userHome'}>Dashboard</Link>
+            }
+        </li>
     </>
 
 
