@@ -24,19 +24,7 @@ const Dashboard = () => {
                     <h1 className="font-bold py-6 w-full  text-center bg-base-300 text-3xl mx-auto "><span className="text-blue-950">SUFRA</span> by S<span className="text-red-600">L</span>ASH</h1>
                 </Link>
                 <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-                    {/* Sidebar content here */}
-                    {/* <li><Link><FaUser></FaUser> Admin Home</Link></li>
-                    <li><Link><FaUtensilSpoon></FaUtensilSpoon> Add Item</Link></li>
-                    <li><Link><FaHamburger></FaHamburger> Manage Items</Link></li>
-                    <li><Link><FaBook></FaBook>Manage Bookings</Link></li>
-                    <li><Link to={'/dashboard/allUsers'}><FaUsers></FaUsers> All Users</Link></li>
-                    <li><Link to={'/dashboard/cart'}><FaShoppingCart></FaShoppingCart> My Cart</Link></li>
-                    <div className="divider"></div>
-                    <li><Link to={'/'}><FaHome></FaHome>Home</Link></li>
-                    <li><Link to={'/menu'}><TiThMenu></TiThMenu>Menu</Link></li> */}
-                    {/* <li><Link to={'/order/salad'}>Order Food</Link></li> */}
-                    {/* <li><Link to={'/cart'}>Cart <p className="badge badge-accent">{cart.length}</p></Link></li> */}
-                    {/* <li><Link to={'/dashboard'}>Dashboard</Link></li> */}
+                    
                     {
                         isAdmin ? <>
                             <li>
